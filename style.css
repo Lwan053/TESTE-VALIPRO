@@ -759,6 +759,7 @@ tr:hover td {
         letter-spacing: 0.5px;
     }
 
+/* ANTES (COM ERRO DE ÍNDICE) */
     table td:nth-child(1),
     table td:nth-child(2),
     table td:nth-child(3) {
@@ -794,7 +795,7 @@ tr:hover td {
         grid-column: 3;
         grid-row: 4;
         justify-content: flex-end;
-    }
+    } }
 
     table td:nth-child(6)::before {
         display: none !important;
