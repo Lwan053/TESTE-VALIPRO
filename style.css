@@ -688,7 +688,7 @@ tr:hover td {
 }
 
 /* ==========================================================================
-   10. AJUSTES RESPONSIVOS (MOBILE E TELAS MENORES)
+   10. OTIMIZAÇÃO COMPACTA PARA DISPOSITIVOS MÓVEIS (CELULARES)
    ========================================================================== */
 @media (max-width: 768px) {
     body {
@@ -716,12 +716,118 @@ tr:hover td {
     }
 
     .dashboard-header {
-        padding: 12px 16px;
-        margin-top: 12px;
-        margin-bottom: 12px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
+        padding: 16px;
+        margin-top: 16px;
+    }
+
+    table thead {
+        display: none;
+    }
+
+    table, tbody {
+        display: block;
+        width: 100%;
+    }
+
+    table tr {
+        display: grid !important;
+        grid-template-columns: 1.2fr 0.8fr 1fr;
+        background: var(--bg-card);
+        border: 2px solid var(--border-color); 
+        border-radius: 14px;
+        padding: 16px;
+        margin-bottom: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+    }
+
+    table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0 !important;
+        border-bottom: 1.5px solid var(--border-color); 
+        font-size: 14px;
+        width: 100% !important;
+    }
+
+    table td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        color: var(--text-secondary);
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+    }
+
+    table td:nth-child(1),
+    table td:nth-child(2),
+    table td:nth-child(3) {
+        grid-column: span 3;
+    }
+
+    table td:nth-child(4),
+    table td:nth-child(5),
+    table td:nth-child(6) {
+        border-bottom: none !important;
+        padding: 12px 4px 0 4px !important;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 6px;
+    }
+
+    table td:nth-child(5) {
+        grid-column: 1;
+        grid-row: 4;
+        justify-content: flex-start;
+        border-right: 2px solid var(--border-color); 
+    }
+
+    table td:nth-child(4) {
+        grid-column: 2;
+        grid-row: 4;
+        justify-content: center;
+        border-right: 2px solid var(--border-color); 
+    }
+
+    table td:nth-child(6) {
+        grid-column: 3;
+        grid-row: 4;
+        justify-content: flex-end;
+    }
+
+    table td:nth-child(6)::before {
+        display: none !important;
+    }
+
+    table td:nth-child(4)::before,
+    table td:nth-child(5)::before {
+        margin-right: 2px;
+    }
+
+    table td strong {
+        text-align: right;
+        max-width: 70%;
+        word-break: break-word;
+        font-size: 14px;
+        color: var(--text-primary);
+    }
+
+    .btn-del {
+        width: 100%;
+        padding: 8px 12px !important;
+        font-size: 12px !important;
+        background-color: #ef4444 !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 6px;
+        font-weight: 600;
+        text-align: center;
+        box-shadow: 0 1px 2px rgba(239, 68, 68, 0.2);
+    }
+
+    .btn-del:hover {
+        background-color: #dc2626 !important;
     }
 
     .header-actions {
@@ -738,177 +844,121 @@ tr:hover td {
         font-size: 12px !important;
         height: auto;
     }
+}
 
-    /* Formulário no Mobile */
+/* ==========================================================================
+   11. PERSONALIZAÇÃO COMPLEMENTAR PARA GERENCIAMENTO DE SETORES
+   ========================================================================== */
+.btn-del-sector {
+    padding: 6px 14px !important;
+    width: auto !important;
+    display: inline-block;
+}
+
+#direct-sector-form {
+    background: var(--bg-input);
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.form-row-group {
+    display: flex;
+    flex: 1 1 100%;
+    gap: 16px;
+    align-items: flex-end;
+}
+
+.btn-scan-trigger-new {
+    height: 42px;
+    background-color: #475569;
+    color: white;
+    border: none;
+    padding: 0 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.btn-scan-trigger-new:hover {
+    background-color: #334155;
+}
+
+@media (max-width: 768px) {
     .form-row-group {
         flex-direction: column;
         width: 100%;
-        gap: 12px;
+        gap: 16px;
     }
 
     #wrapper-scan {
         order: 1;
         width: 100% !important;
+        flex: 1 1 100% !important;
     }
 
     #wrapper-barcode {
         order: 2;
-        width: 100% !important;
+        width: 65% !important;
+        flex: 1 1 65% !important;
     }
 
     #wrapper-quantity {
         order: 3;
-        width: 100% !important;
+        width: 30% !important;
+        flex: 1 1 30% !important;
     }
 
     .label-scan-desktop {
         display: none !important;
     }
 
-    /* Ajuste dos Cards no Mobile */
-    .product-card-body {
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-    }
-
-    .card-col {
-        border-right: none;
-    }
-
-    .card-col-action {
-        grid-column: span 2;
-    }
-
-    .card-col-action .btn-del {
-        width: 100%;
-        justify-content: center;
+    .form-row-group {
+        display: flex !important;
+        flex-flow: row wrap !important;
     }
 }
 
 /* ==========================================================================
-   11. NOVO CARD DE PRODUTOS (DESIGN ATUALIZADO)
+   ESTILIZAÇÃO DA ESTRELA DE MARCAÇÃO
    ========================================================================== */
-.products-cards-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    width: 100%;
-}
-
-.product-card-item {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 16px 20px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.product-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    border-bottom: 1px solid var(--table-border);
-    padding-bottom: 10px;
-}
-
-.product-title {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 2px;
-}
-
-.product-barcode {
-    font-size: 12px;
-    color: var(--text-secondary);
-    font-weight: 500;
-}
-
-.product-card-header .btn-star {
-    background: transparent;
-    border: 1px solid var(--border-color);
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    color: #cbd5e1;
+.btn-star {
+    display: none; /* Escondido por padrão na tabela em telas grandes */
     cursor: pointer;
+    font-size: 20px;
+    user-select: none;
+    transition: transform 0.1s ease;
 }
 
-.product-card-header .btn-star.active {
-    color: #eab308;
-    border-color: #fef08a;
-    background-color: #fefce8;
+.btn-star:active {
+    transform: scale(0.85);
 }
 
-.product-card-body {
-    display: grid;
-    grid-template-columns: 2fr 2fr 1fr auto;
-    align-items: center;
-    gap: 16px;
-}
+/* Ativa o posicionamento absoluto dentro do comportamento de card mobile */
+@media (max-width: 768px) {
+    table tr {
+        position: relative; /* Torna o card a referência de posicionamento */
+    }
 
-.card-col {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-right: 1px solid var(--table-border);
-    padding-right: 8px;
-}
+    .btn-star {
+        display: block;
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        z-index: 10;
+        color: #cbd5e1; /* Cor cinza discreta para quando não estiver marcada */
+    }
 
-.card-col-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    flex-shrink: 0;
-}
-
-.icon-blue   { background-color: #eff6ff; }
-.icon-green  { background-color: #f0fdf4; }
-.icon-purple { background-color: #faf5ff; }
-
-.card-col-details {
-    display: flex;
-    flex-direction: column;
-}
-
-.col-label {
-    font-size: 11px;
-    color: var(--text-secondary);
-    font-weight: 500;
-}
-
-.col-value {
-    font-size: 13px;
-    color: var(--text-primary);
-    font-weight: 700;
-}
-
-.card-col-action .btn-del {
-    background-color: #fef2f2;
-    color: #ef4444;
-    border: 1px solid #fee2e2;
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    cursor: pointer;
-}
-
-.card-col-action .btn-del:hover {
-    background-color: #fee2e2;
-    color: #dc2626;
+    .btn-star.active {
+        color: #eab308; /* Amarelo ouro original do seu card quando ativa */
+        text-shadow: 0 0 4px rgba(234, 179, 8, 0.3);
+    }
 }
