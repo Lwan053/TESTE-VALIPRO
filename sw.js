@@ -1,4 +1,4 @@
-const CACHE_NAME = 'valipro-v1';
+const CACHE_NAME = 'valipro-v2';
 const urlsToCache = [
     './',
     './index.html',
