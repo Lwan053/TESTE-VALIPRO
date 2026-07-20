@@ -92,18 +92,20 @@ body {
 .brand-logo-wrapper {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 4px; /* Diminuído de 12px para 4px para colar mais o texto */
     padding-left: 10px;
     border-left: 1px solid var(--border-color);
 }
 
+/* Correção para exibir o ícone do calendário por completo sem cortes */
 .main-logo-icon-only {
     height: 46px;
-    width: 44px;
+    width: 44px; /* Ajustado de 54px para 44px para remover a folga invisível do texto antigo */
     object-fit: contain;
     object-position: left center;
 }
 
+/* Estilização dos textos ao lado */
 .brand-text-wrapper {
     display: flex;
     flex-direction: column;
@@ -114,11 +116,11 @@ body {
 .brand-name-text {
     font-size: 24px;
     font-weight: 700;
-    color: #0c2340;
+    color: #0c2340; /* O azul escuro original da sua marca */
 }
 
 .brand-name-green {
-    color: #16a34a;
+    color: #16a34a; /* O verde original */
 }
 
 .brand-subtitle-text {
@@ -133,11 +135,11 @@ body {
    CONTROLE DO TEMA ESCURO (SEM AFETAR O ÍCONE)
    ========================================================================== */
 .dark-theme .brand-name-text {
-    color: #ffffff;
+    color: #ffffff; /* No modo escuro, apenas o texto azul vira branco */
 }
 
 .dark-theme .brand-subtitle-text {
-    color: #94a3b8;
+    color: #94a3b8; /* Subtítulo fica com cinza mais claro legível */
 }
 
 /* Ícones de Ação da Direita */
@@ -202,14 +204,14 @@ body {
 /* Caixa de Títulos do Painel (Abaixo da navbar) */
 .dashboard-header {
     background-color: var(--bg-card);
-    padding: 24px;
+    padding: 8px 16px;   /* Deixa o bloco bem mais fino */
     border-radius: 12px;
     border: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 24px;
-    margin-bottom: 24px;
+    margin-top: 12px;    /* Diminui o espaço colado no topo */
+    margin-bottom: 12px; /* Diminui o espaço colado nos cards */
     box-shadow: 0 1px 2px rgba(0,0,0,0.02);
 }
 
@@ -234,6 +236,7 @@ body {
     gap: 12px;
 }
 
+/* Botões do Topo */
 .btn-logout {
     background-color: #ef4444;
     color: white;
@@ -304,6 +307,7 @@ body {
     color: rgba(255, 255, 255, 0.9);
 }
 
+/* Garante legibilidade das tags h3 nos cards cinza/claros que herdam var */
 #btn-card-config .card-info h3 {
     color: #ffffff !important;
 }
@@ -332,6 +336,7 @@ body {
     color: white;
 }
 
+/* Paleta de Cores Dinâmica dos Cards */
 .card-green { background: #15803d; }
 .card-blue { background: #1d4ed8; }
 .card-lightgreen { background: #16a34a; }
@@ -371,6 +376,7 @@ body {
     margin-bottom: 20px;
 }
 
+/* Helper Utilitário */
 .hidden {
     display: none !important;
 }
@@ -416,10 +422,12 @@ body {
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
+/* Modificadores de tamanho responsivo dos inputs */
 .size-mini { flex: 1 1 80px; }
 .size-medium { flex: 2 1 180px; }
 .size-large { flex: 4 1 280px; }
 
+/* Container especial para acoplar o botão de scan */
 .barcode-input-container {
     display: flex;
     gap: 6px;
@@ -534,6 +542,7 @@ tr:hover td {
     background-color: var(--table-header-bg);
 }
 
+/* Botão de Exclusão Individual */
 .btn-del {
     background-color: transparent;
     color: #ef4444;
@@ -552,6 +561,7 @@ tr:hover td {
     border-color: #ef4444;
 }
 
+/* Badges de Status */
 .badge {
     padding: 4px 8px;
     border-radius: 4px;
@@ -678,7 +688,7 @@ tr:hover td {
 }
 
 /* ==========================================================================
-   10. OTIMIZAÇÃO COMPACTA PARA DISPOSITIVOS MÓVEIS (FORMATO CARD)
+   10. OTIMIZAÇÃO COMPACTA PARA DISPOSITIVOS MÓVEIS (CELULARES)
    ========================================================================== */
 @media (max-width: 768px) {
     body {
@@ -720,34 +730,22 @@ tr:hover td {
     }
 
     table tr {
-        display: flex !important;
-        flex-direction: column;
-        position: relative;
+        display: grid !important;
+        grid-template-columns: 1.2fr 0.8fr 1fr;
         background: var(--bg-card);
-        border: 1px solid var(--border-color);
-        border-radius: 16px;
+        border: 2px solid var(--border-color); 
+        border-radius: 14px;
         padding: 16px;
         margin-bottom: 16px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-    }
-
-    /* Adiciona a estrela no canto superior direito do card */
-    table tr::after {
-        content: '☆';
-        position: absolute;
-        top: 14px;
-        right: 16px;
-        font-size: 18px;
-        color: #1e293b;
-        cursor: pointer;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
     }
 
     table td {
-        display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        padding: 10px 0 !important;
-        border-bottom: 1px solid var(--border-color) !important;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0 !important;
+        border-bottom: 1.5px solid var(--border-color); 
         font-size: 14px;
         width: 100% !important;
     }
@@ -757,40 +755,8 @@ tr:hover td {
         font-weight: 700;
         color: var(--text-secondary);
         text-transform: uppercase;
-        font-size: 12px;
+        font-size: 11px;
         letter-spacing: 0.5px;
-    }
-
-    table td strong, 
-    table td span:not(.badge) {
-        text-align: right;
-        font-weight: 700;
-        color: var(--text-primary);
-    }
-
-    /* Destaca o badge do setor */
-    table td .badge-sector,
-    table td[data-label="SETOR"] strong {
-        background-color: #e2e8f0;
-        color: #1e293b;
-        padding: 4px 10px;
-        border-radius: 6px;
-        font-size: 12px;
-        font-weight: 600;
-    }
-
-    /* Linha inferior contendo Vencimento, QTD e Botão Remover */
-    table td:nth-last-child(3),
-    table td:nth-last-child(2),
-    table td:last-child {
-        border-bottom: none !important;
-    }
-
-    /* Alinha o contêiner dos dados inferiores em formato horizontal */
-    table tr {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr auto;
-        row-gap: 0;
     }
 
     table td:nth-child(1),
@@ -799,40 +765,65 @@ tr:hover td {
         grid-column: span 3;
     }
 
-    table td:nth-child(4) {
-        grid-column: 1;
-        border-right: 1px solid var(--border-color);
-        padding-right: 8px !important;
+    table td:nth-child(4),
+    table td:nth-child(5),
+    table td:nth-child(6) {
+        border-bottom: none !important;
+        padding: 12px 4px 0 4px !important;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 6px;
     }
 
     table td:nth-child(5) {
+        grid-column: 1;
+        grid-row: 4;
+        justify-content: flex-start;
+        border-right: 2px solid var(--border-color); 
+    }
+
+    table td:nth-child(4) {
         grid-column: 2;
-        border-right: 1px solid var(--border-color);
-        padding-left: 8px !important;
-        padding-right: 8px !important;
+        grid-row: 4;
+        justify-content: center;
+        border-right: 2px solid var(--border-color); 
     }
 
     table td:nth-child(6) {
         grid-column: 3;
-        padding-left: 8px !important;
-        justify-content: flex-end !important;
+        grid-row: 4;
+        justify-content: flex-end;
     }
 
     table td:nth-child(6)::before {
         display: none !important;
     }
 
+    table td:nth-child(4)::before,
+    table td:nth-child(5)::before {
+        margin-right: 2px;
+    }
+
+    table td strong {
+        text-align: right;
+        max-width: 70%;
+        word-break: break-word;
+        font-size: 14px;
+        color: var(--text-primary);
+    }
+
     .btn-del {
-        width: auto !important;
-        padding: 8px 16px !important;
-        font-size: 13px !important;
+        width: 100%;
+        padding: 8px 12px !important;
+        font-size: 12px !important;
         background-color: #ef4444 !important;
         color: white !important;
         border: none !important;
-        border-radius: 8px !important;
+        border-radius: 6px;
         font-weight: 600;
         text-align: center;
-        box-shadow: none;
+        box-shadow: 0 1px 2px rgba(239, 68, 68, 0.2);
     }
 
     .btn-del:hover {
@@ -936,97 +927,38 @@ tr:hover td {
     }
 }
 
-.products-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(360px,1fr));
-    gap:20px;
+/* ==========================================================================
+   ESTILIZAÇÃO DA ESTRELA DE MARCAÇÃO
+   ========================================================================== */
+.btn-star {
+    display: none; /* Escondido por padrão na tabela em telas grandes */
+    cursor: pointer;
+    font-size: 20px;
+    user-select: none;
+    transition: transform 0.1s ease;
 }
 
-.product-card{
-    background:var(--bg-card);
-    border-radius:22px;
-    padding:22px;
-    box-shadow:0 8px 20px rgba(0,0,0,.08);
-    position:relative;
-    border:2px solid transparent;
+.btn-star:active {
+    transform: scale(0.85);
 }
 
-.product-card.vencido{
-    border-color:#ef4444;
-}
+/* Ativa o posicionamento absoluto dentro do comportamento de card mobile */
+@media (max-width: 768px) {
+    table tr {
+        position: relative; /* Torna o card a referência de posicionamento */
+    }
 
-.product-card.avencer{
-    border-color:#f59e0b;
-}
+    .btn-star {
+        display: block;
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        z-index: 10;
+        color: #cbd5e1; /* Cor cinza discreta para quando não estiver marcada */
+    }
 
-.product-card.ok{
-    border-color:#22c55e;
-}
-
-.product-header h3{
-    font-size:22px;
-    margin-bottom:6px;
-}
-
-.product-barcode{
-    color:var(--text-secondary);
-    font-family:monospace;
-    margin-bottom:18px;
-}
-
-.product-info{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:16px;
-    margin-bottom:20px;
-}
-
-.info-item{
-    text-align:center;
-}
-
-.info-item i{
-    font-size:26px;
-    display:block;
-    margin-bottom:6px;
-}
-
-.info-item small{
-    display:block;
-    color:var(--text-secondary);
-}
-
-.info-item strong{
-    display:block;
-    margin-top:3px;
-}
-
-.product-actions{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.btn-remove{
-
-    background:#fee2e2;
-    color:#dc2626;
-    border:none;
-    border-radius:12px;
-    padding:10px 18px;
-    cursor:pointer;
-}
-
-.btn-star{
-
-    position:absolute;
-
-    top:18px;
-
-    right:18px;
-
-    font-size:28px;
-
-    cursor:pointer;
-
+    .btn-star.active {
+        color: #eab308; /* Amarelo ouro original do seu card quando ativa */
+        text-shadow: 0 0 4px rgba(234, 179, 8, 0.3);
+    }
 }
