@@ -92,20 +92,18 @@ body {
 .brand-logo-wrapper {
     display: flex;
     align-items: center;
-    gap: 4px; /* Diminuído de 12px para 4px para colar mais o texto */
+    gap: 4px;
     padding-left: 10px;
     border-left: 1px solid var(--border-color);
 }
 
-/* Correção para exibir o ícone do calendário por completo sem cortes */
 .main-logo-icon-only {
     height: 46px;
-    width: 44px; /* Ajustado de 54px para 44px para remover a folga invisível do texto antigo */
+    width: 44px;
     object-fit: contain;
     object-position: left center;
 }
 
-/* Estilização dos textos ao lado */
 .brand-text-wrapper {
     display: flex;
     flex-direction: column;
@@ -116,11 +114,11 @@ body {
 .brand-name-text {
     font-size: 24px;
     font-weight: 700;
-    color: #0c2340; /* O azul escuro original da sua marca */
+    color: #0c2340;
 }
 
 .brand-name-green {
-    color: #16a34a; /* O verde original */
+    color: #16a34a;
 }
 
 .brand-subtitle-text {
@@ -135,11 +133,11 @@ body {
    CONTROLE DO TEMA ESCURO (SEM AFETAR O ÍCONE)
    ========================================================================== */
 .dark-theme .brand-name-text {
-    color: #ffffff; /* No modo escuro, apenas o texto azul vira branco */
+    color: #ffffff;
 }
 
 .dark-theme .brand-subtitle-text {
-    color: #94a3b8; /* Subtítulo fica com cinza mais claro legível */
+    color: #94a3b8;
 }
 
 /* Ícones de Ação da Direita */
@@ -236,7 +234,6 @@ body {
     gap: 12px;
 }
 
-/* Botões do Topo */
 .btn-logout {
     background-color: #ef4444;
     color: white;
@@ -307,7 +304,6 @@ body {
     color: rgba(255, 255, 255, 0.9);
 }
 
-/* Garante legibilidade das tags h3 nos cards cinza/claros que herdam var */
 #btn-card-config .card-info h3 {
     color: #ffffff !important;
 }
@@ -336,7 +332,6 @@ body {
     color: white;
 }
 
-/* Paleta de Cores Dinâmica dos Cards */
 .card-green { background: #15803d; }
 .card-blue { background: #1d4ed8; }
 .card-lightgreen { background: #16a34a; }
@@ -376,7 +371,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* Helper Utilitário */
 .hidden {
     display: none !important;
 }
@@ -422,12 +416,10 @@ body {
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
-/* Modificadores de tamanho responsivo dos inputs */
 .size-mini { flex: 1 1 80px; }
 .size-medium { flex: 2 1 180px; }
 .size-large { flex: 4 1 280px; }
 
-/* Container especial para acoplar o botão de scan */
 .barcode-input-container {
     display: flex;
     gap: 6px;
@@ -542,7 +534,6 @@ tr:hover td {
     background-color: var(--table-header-bg);
 }
 
-/* Botão de Exclusão Individual */
 .btn-del {
     background-color: transparent;
     color: #ef4444;
@@ -561,7 +552,6 @@ tr:hover td {
     border-color: #ef4444;
 }
 
-/* Badges de Status */
 .badge {
     padding: 4px 8px;
     border-radius: 4px;
@@ -688,137 +678,173 @@ tr:hover td {
 }
 
 /* ==========================================================================
-   10. OTIMIZAÇÃO COMPACTA PARA DISPOSITIVOS MÓVEIS (CELULARES)
-   ========================================================================== */
-/* ==========================================================================
-   10. OTIMIZAÇÃO COMPACTA PARA DISPOSITIVOS MÓVEIS (CELULARES)
+   10. OTIMIZAÇÃO COMPACTA PARA DISPOSITIVOS MÓVEIS (FORMATO CARD)
    ========================================================================== */
 @media (max-width: 768px) {
-    body { padding: 0; }
-    .main-top-navbar { padding: 0 16px; }
-    .dashboard-container { width: 100%; padding: 0 12px; }
+    body {
+        padding: 0;
+    }
+
+    .main-top-navbar {
+        padding: 0 16px;
+    }
+
+    .dashboard-container {
+        width: 100%;
+        padding: 0 12px;
+    }
 
     .view-content, .module-section {
         background-color: transparent !important;
         padding: 0 !important;
         box-shadow: none !important;
     }
-    .module-section h2 { padding-left: 8px; margin-bottom: 16px; }
-    .dashboard-header { padding: 16px; margin-top: 16px; }
 
-    table thead { display: none; }
-    table, tbody { display: block; width: 100%; }
+    .module-section h2 {
+        padding-left: 8px;
+        margin-bottom: 16px;
+    }
 
-    /* Card do produto */
+    .dashboard-header {
+        padding: 16px;
+        margin-top: 16px;
+    }
+
+    table thead {
+        display: none;
+    }
+
+    table, tbody {
+        display: block;
+        width: 100%;
+    }
+
     table tr {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr 1fr;
+        display: flex !important;
+        flex-direction: column;
         position: relative;
         background: var(--bg-card);
-        border: 2px solid var(--border-color);
-        border-radius: 14px;
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
         padding: 16px;
         margin-bottom: 16px;
-        box-shadow: 0 4px 6px -1px rgba(0,0,0,.08), 0 2px 4px -1px rgba(0,0,0,.04);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    /* Adiciona a estrela no canto superior direito do card */
+    table tr::after {
+        content: '☆';
+        position: absolute;
+        top: 14px;
+        right: 16px;
+        font-size: 18px;
+        color: #1e293b;
+        cursor: pointer;
     }
 
     table td {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 12px 0 !important;
-        border-bottom: 1.5px solid var(--border-color);
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 10px 0 !important;
+        border-bottom: 1px solid var(--border-color) !important;
         font-size: 14px;
         width: 100% !important;
     }
+
     table td::before {
         content: attr(data-label);
         font-weight: 700;
         color: var(--text-secondary);
         text-transform: uppercase;
-        font-size: 11px;
+        font-size: 12px;
         letter-spacing: 0.5px;
     }
-    table td strong {
+
+    table td strong, 
+    table td span:not(.badge) {
         text-align: right;
-        max-width: 70%;
-        word-break: break-word;
-        font-size: 14px;
+        font-weight: 700;
         color: var(--text-primary);
     }
 
-    /* Linhas de largura total: Cód. Barras (1), Produto (2), Setor (4) */
-    table td:nth-child(1),
-    table td:nth-child(2),
-    table td:nth-child(4) {
-        grid-column: 1 / -1;
-    }
-    table td:nth-child(2) strong { font-weight: 800; }
-
-    /* Setor como pílula à direita */
-    table td:nth-child(4) strong {
-        background: var(--bg-input);
-        padding: 6px 14px;
-        border-radius: 8px;
-        font-size: 13px;
+    /* Destaca o badge do setor */
+    table td .badge-sector,
+    table td[data-label="SETOR"] strong {
+        background-color: #e2e8f0;
+        color: #1e293b;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 12px;
         font-weight: 600;
     }
 
-    /* Linha inferior: Vencimento | Qtd | Remover */
-    table td:nth-child(5),
-    table td:nth-child(3),
-    table td:nth-child(6) {
-        grid-row: 4;
+    /* Linha inferior contendo Vencimento, QTD e Botão Remover */
+    table td:nth-last-child(3),
+    table td:nth-last-child(2),
+    table td:last-child {
         border-bottom: none !important;
-        padding: 14px 8px 0 8px !important;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 6px;
     }
-    table td:nth-child(5) { grid-column: 1; justify-content: flex-start; }
+
+    /* Alinha o contêiner dos dados inferiores em formato horizontal */
+    table tr {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr auto;
+        row-gap: 0;
+    }
+
+    table td:nth-child(1),
+    table td:nth-child(2),
     table td:nth-child(3) {
-        grid-column: 2;
-        justify-content: center;
-        border-left: 1.5px solid var(--border-color);
+        grid-column: span 3;
     }
+
+    table td:nth-child(4) {
+        grid-column: 1;
+        border-right: 1px solid var(--border-color);
+        padding-right: 8px !important;
+    }
+
+    table td:nth-child(5) {
+        grid-column: 2;
+        border-right: 1px solid var(--border-color);
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+
     table td:nth-child(6) {
         grid-column: 3;
-        justify-content: flex-end;
-        border-left: 1.5px solid var(--border-color);
+        padding-left: 8px !important;
+        justify-content: flex-end !important;
     }
-    table td:nth-child(6)::before { display: none !important; }
-    table td:nth-child(3)::before,
-    table td:nth-child(5)::before { margin-right: 4px; }
 
-    /* Estrela flutuando no canto superior direito, fora do fluxo do grid */
-    table td:nth-child(7) {
-        position: absolute;
-        top: 10px;
-        right: 12px;
-        padding: 0 !important;
-        border: none !important;
-        width: auto !important;
-        display: block;
-        background: transparent;
+    table td:nth-child(6)::before {
+        display: none !important;
     }
-    table td:nth-child(7)::before { display: none !important; }
 
     .btn-del {
-        width: 100%;
-        padding: 8px 12px !important;
-        font-size: 12px !important;
+        width: auto !important;
+        padding: 8px 16px !important;
+        font-size: 13px !important;
         background-color: #ef4444 !important;
         color: white !important;
         border: none !important;
-        border-radius: 6px;
+        border-radius: 8px !important;
         font-weight: 600;
         text-align: center;
-        box-shadow: 0 1px 2px rgba(239,68,68,.2);
+        box-shadow: none;
     }
-    .btn-del:hover { background-color: #dc2626 !important; }
 
-    .header-actions { width: 100%; display: flex; gap: 8px; }
+    .btn-del:hover {
+        background-color: #dc2626 !important;
+    }
+
+    .header-actions {
+        width: 100%;
+        display: flex;
+        gap: 8px;
+    }
+    
     .header-actions button {
         flex: 1;
         text-align: center;
