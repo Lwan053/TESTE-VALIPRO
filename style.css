@@ -204,14 +204,14 @@ body {
 /* Caixa de Títulos do Painel (Abaixo da navbar) */
 .dashboard-header {
     background-color: var(--bg-card);
-    padding: 8px 16px;   /* Deixa o bloco bem mais fino */
+    padding: 24px;
     border-radius: 12px;
     border: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 12px;    /* Diminui o espaço colado no topo */
-    margin-bottom: 12px; /* Diminui o espaço colado nos cards */
+    margin-top: 24px;
+    margin-bottom: 24px;
     box-shadow: 0 1px 2px rgba(0,0,0,0.02);
 }
 
@@ -925,90 +925,4 @@ tr:hover td {
         display: flex !important;
         flex-flow: row wrap !important;
     }
-}
-
-/* ==========================================================================
-   ESTILIZAÇÃO DA ESTRELA DE MARCAÇÃO
-   ========================================================================== */
-.btn-star {
-    display: none; /* Escondido por padrão na tabela em telas grandes */
-    cursor: pointer;
-    font-size: 20px;
-    user-select: none;
-    transition: transform 0.1s ease;
-}
-
-.btn-star:active {
-    transform: scale(0.85);
-}
-
-/* Ativa o posicionamento absoluto dentro do comportamento de card mobile */
-@media (max-width: 768px) {
-    table tr {
-        position: relative; /* Torna o card a referência de posicionamento */
-    }
-
-    .btn-star {
-        display: block;
-        position: absolute;
-        top: 14px;
-        right: 14px;
-        z-index: 10;
-        color: #cbd5e1; /* Cor cinza discreta para quando não estiver marcada */
-    }
-
-    .btn-star.active {
-        color: #eab308; /* Amarelo ouro original do seu card quando ativa */
-        text-shadow: 0 0 4px rgba(234, 179, 8, 0.3);
-    }
-}
-/* ==========================================================================
-   FIX v2: layout mobile do card com ESTRELA como 1ª <td>
-   7 células: [estrela, cód.barras, produto, setor, qtd, vencimento, ação]
-   Layout: Cód.Barras / Produto / [Qtd|Setor|Venc.] / Remover (largura total)
-   ========================================================================== */
-@media (max-width: 768px) {
-    table tr { grid-template-columns: 1fr 1fr 1fr !important; }
-
-    /* Estrela — fora do fluxo (botão .btn-star já é position:absolute) */
-    table td:nth-child(1) {
-        display: block;
-        padding: 0 !important; margin: 0 !important; border: none !important;
-        height: 0; width: 0 !important; overflow: visible;
-        grid-column: 1 / -1; grid-row: 1;
-    }
-    table td:nth-child(1)::before { content: none !important; display: none !important; }
-
-    /* Cód. Barras e Produto — largura total */
-    table td:nth-child(2),
-    table td:nth-child(3) {
-        grid-column: 1 / -1;
-        display: flex; flex-direction: row; align-items: center; justify-content: space-between;
-        padding: 12px 0 !important;
-        border-bottom: 1.5px solid var(--border-color);
-        gap: 0;
-    }
-
-    /* Linha do meio: Qtd | Setor | Vencimento */
-    table td:nth-child(4),
-    table td:nth-child(5),
-    table td:nth-child(6) {
-        grid-row: 4;
-        border-bottom: none !important;
-        padding: 12px 4px !important;
-        display: flex; flex-direction: column; gap: 4px;
-    }
-    table td:nth-child(5) { grid-column: 1; align-items: flex-start; border-right: 2px solid var(--border-color); }
-    table td:nth-child(4) { grid-column: 2; align-items: center;    border-right: 2px solid var(--border-color); }
-    table td:nth-child(6) { grid-column: 3; align-items: flex-end; }
-
-    /* Ação — largura total embaixo */
-    table td:nth-child(7) {
-        grid-column: 1 / -1; grid-row: 5;
-        border-bottom: none !important;
-        padding: 12px 0 0 0 !important;
-        display: flex; justify-content: center;
-    }
-    table td:nth-child(7)::before { display: none !important; }
-    table td:nth-child(7) .btn-del { width: 100%; }
 }
