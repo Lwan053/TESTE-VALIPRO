@@ -61,6 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const marcadosTableBody    = $('marcados-table-body');
     const tableBody            = $('product-table-body');
+    const productsCardsContainer = $('products-cards-container');
     const avencerTableBody     = $('avencer-table-body');
     const sectorTableBody      = $('sector-table-body');
     const colaboradorTableBody = $('colaborador-table-body');
@@ -401,35 +402,89 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderTable() {
-        if (!tableBody) return;
-        tableBody.innerHTML = '';
-        const c = badgeColors();
+        // Prioriza o container de cards se existir, caso contrário usa a tabela antiga
+        if (productsCardsContainer) {
+            productsCardsContainer.innerHTML = '';
+            const c = badgeColors();
 
-        localProducts.forEach((p) => {
-            const barcodeText = p.barcode || '---';
-            const qtyText     = p.quantity || '1';
-            const sectorText  = p.sector   || 'Geral';
-            const estrela     = p.marcado ? '⭐' : '☆';
-            const starClass   = p.marcado ? 'btn-star active' : 'btn-star';
+            localProducts.forEach((p) => {
+                const barcodeText = p.barcode || '---';
+                const qtyText     = p.quantity || '1';
+                const sectorText  = p.sector   || 'Geral';
+                const starClass   = p.marcado ? 'btn-star active' : 'btn-star';
+                const starIcon    = p.marcado ? '★' : '☆';
 
-            const tr = document.createElement('tr');
-            // ESTRELA agora vai dentro de um <td> (corrige HTML inválido do original)
-            tr.innerHTML = `
-                <td data-label="" style="text-align:center;">
-                    <button type="button" class="${starClass}" data-id="${p.id}" title="Marcar Produto" style="background:none;border:none;cursor:pointer;font-size:18px;">${estrela}</button>
-                </td>
-                <td data-label="Cód. Barras"><span style="font-family:monospace;color:#64748b;">${barcodeText}</span></td>
-                <td data-label="Produto"><strong>${p.name}</strong></td>
-                <td data-label="Setor"><span class="badge-sector" style="background:${c.bg};color:${c.color};padding:4px 8px;border-radius:4px;font-size:12px;font-weight:500;">${sectorText}</span></td>
-                <td data-label="Qtd"><span style="font-weight:600;color:${c.qty};">${qtyText}</span></td>
-                <td data-label="Vencimento">${formatarData(p.expiry)}</td>
-                <td data-label="Ação" style="text-align:center;"><button class="btn-del" data-id="${p.id}">Remover</button></td>`;
-            tableBody.appendChild(tr);
-        });
+                const card = document.createElement('div');
+                card.className = 'product-card-item';
+                card.innerHTML = `
+                    <div class="product-card-header">
+                        <div class="product-info-main">
+                            <h3 class="product-title">${p.name}</h3>
+                            <span class="product-barcode">Cód. barras: ${barcodeText}</span>
+                        </div>
+                        <button type="button" class="${starClass}" data-id="${p.id}" title="Marcar Produto" style="background:none;border:none;cursor:pointer;font-size:20px;">${starIcon}</button>
+                    </div>
+                    <div class="product-card-body">
+                        <div class="card-col">
+                            <div class="card-col-icon icon-blue">🏪</div>
+                            <div class="card-col-details">
+                                <span class="col-label">Setor</span>
+                                <strong class="col-value">${sectorText}</strong>
+                            </div>
+                        </div>
+                        <div class="card-col">
+                            <div class="card-col-icon icon-green">📅</div>
+                            <div class="card-col-details">
+                                <span class="col-label">Vencimento</span>
+                                <strong class="col-value">${formatarData(p.expiry)}</strong>
+                            </div>
+                        </div>
+                        <div class="card-col">
+                            <div class="card-col-icon icon-purple">📦</div>
+                            <div class="card-col-details">
+                                <span class="col-label">Qtd.</span>
+                                <strong class="col-value">${qtyText}</strong>
+                            </div>
+                        </div>
+                        <div class="card-col-action">
+                            <button class="btn-del" data-id="${p.id}" style="background:none;border:1px solid #dc2626;color:#dc2626;padding:6px 12px;border-radius:4px;cursor:pointer;">
+                                🗑️ Remover
+                            </button>
+                        </div>
+                    </div>
+                `;
+                productsCardsContainer.appendChild(card);
+            });
+        } else if (tableBody) {
+            // Fallback para tabela antiga se container de cards não existir
+            tableBody.innerHTML = '';
+            const c = badgeColors();
+
+            localProducts.forEach((p) => {
+                const barcodeText = p.barcode || '---';
+                const qtyText     = p.quantity || '1';
+                const sectorText  = p.sector   || 'Geral';
+                const estrela     = p.marcado ? '⭐' : '☆';
+                const starClass   = p.marcado ? 'btn-star active' : 'btn-star';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td data-label="" style="text-align:center;">
+                        <button type="button" class="${starClass}" data-id="${p.id}" title="Marcar Produto" style="background:none;border:none;cursor:pointer;font-size:18px;">${estrela}</button>
+                    </td>
+                    <td data-label="Cód. Barras"><span style="font-family:monospace;color:#64748b;">${barcodeText}</span></td>
+                    <td data-label="Produto"><strong>${p.name}</strong></td>
+                    <td data-label="Setor"><span class="badge-sector" style="background:${c.bg};color:${c.color};padding:4px 8px;border-radius:4px;font-size:12px;font-weight:500;">${sectorText}</span></td>
+                    <td data-label="Qtd"><span style="font-weight:600;color:${c.qty};">${qtyText}</span></td>
+                    <td data-label="Vencimento">${formatarData(p.expiry)}</td>
+                    <td data-label="Ação" style="text-align:center;"><button class="btn-del" data-id="${p.id}">Remover</button></td>`;
+                tableBody.appendChild(tr);
+            });
+        }
     }
 
-    // Delegação de eventos — evita rebind a cada snapshot
-    tableBody?.addEventListener('click', async (e) => {
+    // Delegação de eventos — suporta tanto tabela quanto cards
+    const handleProductActions = async (e) => {
         const star = e.target.closest('.btn-star');
         const del  = e.target.closest('.btn-del');
         if (star) {
@@ -447,7 +502,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 catch (err) { alert('Erro ao deletar documento: ' + err.message); }
             }
         }
-    });
+    };
+
+    // Listener para cards
+    productsCardsContainer?.addEventListener('click', handleProductActions);
+
+    // Listener para tabela (fallback)
+    tableBody?.addEventListener('click', handleProductActions);
 
     sectorTableBody?.addEventListener('click', async (e) => {
         const btn = e.target.closest('.btn-del-sector');
