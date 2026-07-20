@@ -59,6 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
         cloud:        $('count-cloud'),
     };
 
+    // NOVOS: Containers de Cards para Coletados e Marcados
+    const coletadosContainer  = $('cards-coletados-container');
+    const marcadosContainer   = $('cards-marcados-container');
+
     const marcadosTableBody    = $('marcados-table-body');
     const tableBody            = $('product-table-body');
     const productsCardsContainer = $('products-cards-container');
@@ -386,153 +390,142 @@ document.addEventListener('DOMContentLoaded', () => {
         if (countEls.marcados)   countEls.marcados.textContent   = marcados;
     }
 
-    // ---------- 9. TABELAS ----------
-    function badgeColors() {
-        const isDark = document.body.classList.contains('dark-theme');
-        return {
-            bg:    isDark ? '#334155' : '#e2e8f0',
-            color: isDark ? '#ffffff' : '#1e293b',
-            qty:   isDark ? '#ffffff' : '#1e293b',
-        };
-    }
+    // ---------- 9. FUNÇÕES DE RENDERIZAÇÃO DE CARDS ----------
     function formatarData(expiry) {
         if (!expiry) return '';
         const [ano, mes, dia] = expiry.split('-');
         return (ano && mes && dia) ? `${dia}/${mes}/${ano}` : expiry;
     }
 
+    // Função auxiliar para gerar a estrutura HTML do Card
+    function criarCardHTML(p) {
+        const barcodeText = p.barcode || '---';
+        const qtyText     = p.quantity || '1';
+        const sectorText  = p.sector   || 'GERAL';
+        const starClass   = p.marcado ? 'favorito ativo' : 'favorito';
+        const estrela     = p.marcado ? '★' : '☆';
+
+        const div = document.createElement('div');
+        div.className = 'card-produto';
+        div.dataset.id = p.id;
+
+        div.innerHTML = `
+            <button class="${starClass}" data-id="${p.id}" title="Favoritar">${estrela}</button>
+            <div class="cabecalho">
+                <h2>${p.name}</h2>
+                <span>Cód. barras: ${barcodeText}</span>
+            </div>
+            <hr>
+            <div class="info">
+                <div class="item">
+                    <div class="icone azul">🏪</div>
+                    <div>
+                        <small>Setor</small>
+                        <strong>${sectorText}</strong>
+                    </div>
+                </div>
+                <div class="divisor"></div>
+                <div class="item">
+                    <div class="icone verde">📅</div>
+                    <div>
+                        <small>Vencimento</small>
+                        <strong>${formatarData(p.expiry)}</strong>
+                    </div>
+                </div>
+                <div class="divisor"></div>
+                <div class="item">
+                    <div class="icone roxo">📦</div>
+                    <div>
+                        <small>Qtd.</small>
+                        <strong>${qtyText}</strong>
+                    </div>
+                </div>
+                <div class="divisor"></div>
+                <button class="btn-remover" data-id="${p.id}">🗑️ Remover</button>
+            </div>
+        `;
+        return div;
+    }
+
+    // Renderiza a lista na aba Coletados
     function renderTable() {
-        // Prioriza o container de cards se existir, caso contrário usa a tabela antiga
-        if (productsCardsContainer) {
-            productsCardsContainer.innerHTML = '';
-            const c = badgeColors();
+        if (!coletadosContainer) return;
+        coletadosContainer.innerHTML = '';
+        
+        if (localProducts.length === 0) {
+            coletadosContainer.innerHTML = '<p style="text-align:center; color: var(--text-secondary);">Nenhum produto cadastrado.</p>';
+            return;
+        }
 
-            localProducts.forEach((p) => {
-                const barcodeText = p.barcode || '---';
-                const qtyText     = p.quantity || '1';
-                const sectorText  = p.sector   || 'Geral';
-                const starClass   = p.marcado ? 'btn-star active' : 'btn-star';
-                const starIcon    = p.marcado ? '★' : '☆';
+        localProducts.forEach((p) => {
+            coletadosContainer.appendChild(criarCardHTML(p));
+        });
+    }
 
-                const card = document.createElement('div');
-                card.className = 'product-card-item';
-                card.innerHTML = `
-                    <div class="product-card-header">
-                        <div class="product-info-main">
-                            <h3 class="product-title">${p.name}</h3>
-                            <span class="product-barcode">Cód. barras: ${barcodeText}</span>
-                        </div>
-                        <button type="button" class="${starClass}" data-id="${p.id}" title="Marcar Produto" style="background:none;border:none;cursor:pointer;font-size:20px;">${starIcon}</button>
-                    </div>
-                    <div class="product-card-body">
-                        <div class="card-col">
-                            <div class="card-col-icon icon-blue">🏪</div>
-                            <div class="card-col-details">
-                                <span class="col-label">Setor</span>
-                                <strong class="col-value">${sectorText}</strong>
-                            </div>
-                        </div>
-                        <div class="card-col">
-                            <div class="card-col-icon icon-green">📅</div>
-                            <div class="card-col-details">
-                                <span class="col-label">Vencimento</span>
-                                <strong class="col-value">${formatarData(p.expiry)}</strong>
-                            </div>
-                        </div>
-                        <div class="card-col">
-                            <div class="card-col-icon icon-purple">📦</div>
-                            <div class="card-col-details">
-                                <span class="col-label">Qtd.</span>
-                                <strong class="col-value">${qtyText}</strong>
-                            </div>
-                        </div>
-                        <div class="card-col-action">
-                            <button class="btn-del" data-id="${p.id}" style="background:none;border:1px solid #dc2626;color:#dc2626;padding:6px 12px;border-radius:4px;cursor:pointer;">
-                                🗑️ Remover
-                            </button>
-                        </div>
-                    </div>
-                `;
-                productsCardsContainer.appendChild(card);
-            });
-        } else if (tableBody) {
-            // Fallback para tabela antiga se container de cards não existir
-            tableBody.innerHTML = '';
-            const c = badgeColors();
+    // Renderiza a lista na aba Marcados
+    function renderMarcadosTable() {
+        if (!marcadosContainer) return;
+        marcadosContainer.innerHTML = '';
+        
+        const marcados = localProducts.filter((p) => p.marcado);
+        if (marcados.length === 0) {
+            marcadosContainer.innerHTML = '<p style="text-align:center; color: var(--text-secondary);">Nenhum produto marcado.</p>';
+            return;
+        }
 
-            localProducts.forEach((p) => {
-                const barcodeText = p.barcode || '---';
-                const qtyText     = p.quantity || '1';
-                const sectorText  = p.sector   || 'Geral';
-                const estrela     = p.marcado ? '⭐' : '☆';
-                const starClass   = p.marcado ? 'btn-star active' : 'btn-star';
+        marcados.forEach((p) => {
+            marcadosContainer.appendChild(criarCardHTML(p));
+        });
+    }
 
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td data-label="" style="text-align:center;">
-                        <button type="button" class="${starClass}" data-id="${p.id}" title="Marcar Produto" style="background:none;border:none;cursor:pointer;font-size:18px;">${estrela}</button>
-                    </td>
-                    <td data-label="Cód. Barras"><span style="font-family:monospace;color:#64748b;">${barcodeText}</span></td>
-                    <td data-label="Produto"><strong>${p.name}</strong></td>
-                    <td data-label="Setor"><span class="badge-sector" style="background:${c.bg};color:${c.color};padding:4px 8px;border-radius:4px;font-size:12px;font-weight:500;">${sectorText}</span></td>
-                    <td data-label="Qtd"><span style="font-weight:600;color:${c.qty};">${qtyText}</span></td>
-                    <td data-label="Vencimento">${formatarData(p.expiry)}</td>
-                    <td data-label="Ação" style="text-align:center;"><button class="btn-del" data-id="${p.id}">Remover</button></td>`;
-                tableBody.appendChild(tr);
-            });
+    // Delegação de Eventos para Ações no Firestore
+    function tratarAcoesCard(e) {
+        const starBtn = e.target.closest('.favorito');
+        const delBtn  = e.target.closest('.btn-remover');
+
+        // Ação: Favoritar / Desfavoritar
+        if (starBtn) {
+            const id = starBtn.dataset.id;
+            const p  = localProducts.find((x) => x.id === id);
+            const novoEstado = p ? !p.marcado : true;
+            
+            updateDoc(doc(db, 'produtos', id), { marcado: novoEstado })
+                .catch((err) => console.error('Erro ao favoritar:', err.message));
+            return;
+        }
+
+        // Ação: Remover Card
+        if (delBtn) {
+            const id = delBtn.dataset.id;
+            const cardElement = delBtn.closest('.card-produto');
+
+            if (confirm('Deseja remover este produto definitivamente?')) {
+                // Animação de saída antes de deletar do Firestore
+                if (cardElement) {
+                    cardElement.style.opacity = '0';
+                    cardElement.style.transform = 'scale(0.95)';
+                }
+                
+                setTimeout(async () => {
+                    try {
+                        await deleteDoc(doc(db, 'produtos', id));
+                    } catch (err) {
+                        alert('Erro ao deletar produto: ' + err.message);
+                    }
+                }, 250);
+            }
         }
     }
 
-    // Delegação de eventos — suporta tanto tabela quanto cards
-    const handleProductActions = async (e) => {
-        const star = e.target.closest('.btn-star');
-        const del  = e.target.closest('.btn-del');
-        if (star) {
-            const id = star.dataset.id;
-            const p  = localProducts.find((x) => x.id === id);
-            const novo = p ? !p.marcado : true;
-            try { await updateDoc(doc(db, 'produtos', id), { marcado: novo }); }
-            catch (err) { console.error('Erro ao atualizar marcação:', err.message); }
-            return;
-        }
-        if (del) {
-            const id = del.dataset.id;
-            if (confirm('Deseja remover este produto definitivamente?')) {
-                try { await deleteDoc(doc(db, 'produtos', id)); }
-                catch (err) { alert('Erro ao deletar documento: ' + err.message); }
-            }
-        }
-    };
+    // Associa a delegação aos dois containers
+    coletadosContainer?.addEventListener('click', tratarAcoesCard);
+    marcadosContainer?.addEventListener('click', tratarAcoesCard);
 
-    // Listener para cards
-    productsCardsContainer?.addEventListener('click', handleProductActions);
-
-    // Listener para tabela (fallback)
-    tableBody?.addEventListener('click', handleProductActions);
-
-    sectorTableBody?.addEventListener('click', async (e) => {
-        const btn = e.target.closest('.btn-del-sector');
-        if (!btn) return;
-        if (confirm('Deseja remover este setor definitivamente? Isso não apagará os produtos vinculados a ele.')) {
-            try { await deleteDoc(doc(db, 'setores', btn.dataset.id)); }
-            catch (err) { alert('Erro ao deletar setor: ' + err.message); }
-        }
-    });
-
-    colaboradorTableBody?.addEventListener('click', async (e) => {
-        const btn = e.target.closest('.btn-del-colaborador');
-        if (!btn) return;
-        if (confirm('Deseja remover este colaborador definitivamente?')) {
-            try { await deleteDoc(doc(db, 'colaboradores', btn.dataset.id)); }
-            catch (err) { alert('Erro ao deletar colaborador: ' + err.message); }
-        }
-    });
-
+    // Renderização da tabela "A Vencer"
     function renderAVencerTable() {
         if (!avencerTableBody) return;
         avencerTableBody.innerHTML = '';
         const hoje = new Date(); hoje.setHours(0, 0, 0, 0);
-        const c = badgeColors();
 
         localProducts.forEach((p) => {
             if (!p.expiry) return;
@@ -546,27 +539,11 @@ document.addEventListener('DOMContentLoaded', () => {
             tr.innerHTML = `
                 <td data-label="Cód. Barras"><span style="font-family:monospace;color:#64748b;">${p.barcode || '---'}</span></td>
                 <td data-label="Produto"><strong>${p.name}</strong></td>
-                <td data-label="Setor"><span class="badge-sector" style="background:${c.bg};color:${c.color};padding:2px 6px;border-radius:4px;font-size:11px;">${p.sector || 'Geral'}</span></td>
-                <td data-label="Qtd"><span style="font-weight:600;color:${c.qty};">${p.quantity || '1'}</span></td>
+                <td data-label="Setor"><span class="badge-sector" style="background:var(--badge-bg);color:var(--badge-color);padding:2px 6px;border-radius:4px;font-size:11px;">${p.sector || 'Geral'}</span></td>
+                <td data-label="Qtd"><span style="font-weight:600;color:var(--text-primary);">${p.quantity || '1'}</span></td>
                 <td data-label="Vencimento">${formatarData(p.expiry)}</td>
                 <td data-label="Faltam"><span class="badge vencido" style="background-color:#fff7ed;color:#c2410c;border:1px solid #ffedd5;">${dias} dias</span></td>`;
             avencerTableBody.appendChild(tr);
-        });
-    }
-
-    function renderMarcadosTable() {
-        if (!marcadosTableBody) return;
-        marcadosTableBody.innerHTML = '';
-        const c = badgeColors();
-        localProducts.filter((p) => p.marcado).forEach((p) => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td data-label="Cód. Barras"><span style="font-family:monospace;color:#64748b;">${p.barcode || '---'}</span></td>
-                <td data-label="Produto"><strong>${p.name}</strong></td>
-                <td data-label="Setor"><span class="badge-sector" style="background:${c.bg};color:${c.color};padding:4px 8px;border-radius:4px;font-size:12px;">${p.sector || 'Geral'}</span></td>
-                <td data-label="Qtd"><span style="font-weight:600;color:${c.qty};">${p.quantity || '1'}</span></td>
-                <td data-label="Vencimento">${formatarData(p.expiry)}</td>`;
-            marcadosTableBody.appendChild(tr);
         });
     }
 
@@ -613,5 +590,24 @@ document.addEventListener('DOMContentLoaded', () => {
         renderTable();
         renderAVencerTable();
         renderMarcadosTable();
+    });
+
+    // ---------- 13. EXCLUSÃO DE SETORES E COLABORADORES ----------
+    sectorTableBody?.addEventListener('click', async (e) => {
+        const btn = e.target.closest('.btn-del-sector');
+        if (!btn) return;
+        if (confirm('Deseja remover este setor definitivamente? Isso não apagará os produtos vinculados a ele.')) {
+            try { await deleteDoc(doc(db, 'setores', btn.dataset.id)); }
+            catch (err) { alert('Erro ao deletar setor: ' + err.message); }
+        }
+    });
+
+    colaboradorTableBody?.addEventListener('click', async (e) => {
+        const btn = e.target.closest('.btn-del-colaborador');
+        if (!btn) return;
+        if (confirm('Deseja remover este colaborador definitivamente?')) {
+            try { await deleteDoc(doc(db, 'colaboradores', btn.dataset.id)); }
+            catch (err) { alert('Erro ao deletar colaborador: ' + err.message); }
+        }
     });
 });
