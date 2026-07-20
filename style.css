@@ -957,6 +957,159 @@ tr:hover td {
         color: #cbd5e1; /* Cor cinza discreta para quando não estiver marcada */
     }
 
+/* Container principal dos cards */
+.products-cards-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+/* Estrutura do Card */
+.product-card-item {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Cabeçalho do Card (Título, Código e Estrela) */
+.product-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid var(--table-border);
+    padding-bottom: 12px;
+}
+
+.product-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.product-barcode {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* Botão de Estrela */
+.product-card-header .btn-star {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #cbd5e1;
+    cursor: pointer;
+}
+
+.product-card-header .btn-star.active {
+    color: #eab308;
+    border-color: #fef08a;
+    background-color: #fefce8;
+}
+
+/* Corpo do Card (Grid com Setor, Vencimento, Qtd e Remover) */
+.product-card-body {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr auto;
+    align-items: center;
+    gap: 16px;
+}
+
+.card-col {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-right: 1px solid var(--table-border);
+    padding-right: 8px;
+}
+
+.card-col-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+/* Cores de Fundo dos Ícones */
+.icon-blue   { background-color: #eff6ff; }
+.icon-green  { background-color: #f0fdf4; }
+.icon-purple { background-color: #faf5ff; }
+
+.card-col-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.col-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.col-value {
+    font-size: 14px;
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+/* Botão Remover */
+.card-col-action .btn-del {
+    background-color: #fef2f2;
+    color: #ef4444;
+    border: 1px solid #fee2e2;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.card-col-action .btn-del:hover {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+/* Ajustes para Telas Menores (Mobile) */
+@media (max-width: 768px) {
+    .product-card-body {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .card-col {
+        border-right: none;
+    }
+
+    .card-col-action {
+        grid-column: span 2;
+    }
+
+    .card-col-action .btn-del {
+        width: 100%;
+        justify-content: center;
+    }
+}
+   
     .btn-star.active {
         color: #eab308; /* Amarelo ouro original do seu card quando ativa */
         text-shadow: 0 0 4px rgba(234, 179, 8, 0.3);
