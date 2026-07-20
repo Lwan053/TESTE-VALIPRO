@@ -759,13 +759,21 @@ tr:hover td {
         letter-spacing: 0.5px;
     }
 
-/* ANTES (COM ERRO DE ÍNDICE) */
-    table td:nth-child(1),
+    /* DEPOIS (CORRIGIDO PARA MANTENÇÃO DOS ÍNDICES DAS 7 COLUNAS) */
+
+    /* Coluna 1: Estrela (fora do fluxo do grid via posição absoluta) */
+    table td:nth-child(1) {
+        border-bottom: none !important;
+        padding: 0 !important;
+    }
+
+    /* Colunas 2 e 3: Cód. Barras e Nome do Produto */
     table td:nth-child(2),
     table td:nth-child(3) {
         grid-column: span 3;
     }
 
+    /* Linha inferior de dados (Setor, Qtd, Vencimento) */
     table td:nth-child(4),
     table td:nth-child(5),
     table td:nth-child(6) {
@@ -777,26 +785,36 @@ tr:hover td {
         gap: 6px;
     }
 
-    table td:nth-child(5) {
+    /* Setor */
+    table td:nth-child(4) {
         grid-column: 1;
-        grid-row: 4;
+        grid-row: 3;
         justify-content: flex-start;
         border-right: 2px solid var(--border-color); 
     }
 
-    table td:nth-child(4) {
+    /* Quantidade */
+    table td:nth-child(5) {
         grid-column: 2;
-        grid-row: 4;
+        grid-row: 3;
         justify-content: center;
         border-right: 2px solid var(--border-color); 
     }
 
+    /* Vencimento */
     table td:nth-child(6) {
         grid-column: 3;
-        grid-row: 4;
+        grid-row: 3;
         justify-content: flex-end;
-    } }
+    }
 
+    /* Ação / Botão Remover (ocupa a linha final) */
+    table td:nth-child(7) {
+        grid-column: span 3;
+        grid-row: 4;
+        border-bottom: none !important;
+        padding-top: 10px !important;
+    }
     table td:nth-child(6)::before {
         display: none !important;
     }
