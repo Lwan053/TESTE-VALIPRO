@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Validade - Controle de Produtos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <header class="main-header">
+            <div class="header-brand">
+                <h2>Web Validade</h2>
+                <span>Painel de Controle</span>
+            </div>
+            <button id="btn-logout" class="btn-logout">Sair do Sistema</button>
+        </header>
+
+        <main class="main-content">
+            <section class="card-section">
+                <h3>Cadastrar Novo Produto</h3>
+                <form id="product-form">
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label for="product-name">Nome do Produto</label>
+                            <input type="text" id="product-name" placeholder="Ex: Leite Integral" required>
+                        </div>
+                        <div class="form-field">
+                            <label for="product-expiry">Data de Vencimento</label>
+                            <input type="date" id="product-expiry" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-add">Adicionar à Lista</button>
+                </form>
+            </section>
+
+            <section class="card-section">
+                <h3>Produtos Monitorados</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Vencimento</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="product-table-body">
+                            </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
