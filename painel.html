@@ -30,7 +30,7 @@
     <nav class="main-top-navbar">
         <div class="navbar-left">
             <button id="btn-toggle-menu" class="btn-menu-hamburger" title="Menu">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"[...]
             </button>
             <div class="brand-logo-wrapper" id="btn-home" style="cursor: pointer;">
                 <img src="logo.PNG" alt="ValiPro Icon" class="main-logo-icon-only">
@@ -43,16 +43,16 @@
 
         <div class="navbar-right">
             <button id="btn-back" class="btn-nav-action hidden" title="Voltar ao Início">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"><[...]
             </button>
 
             <div class="notification-bell-container">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bell-icon"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="bell-icon"><path d="M18 8A6 6 0[...]
                 <span class="notification-badge hidden" id="count-notif-badge">0</span>
             </div>
 
             <button id="btn-logout" class="btn-nav-action btn-logout-icon" title="Sair do Sistema">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2[...]
             </button>
         </div>
     </nav>
@@ -187,7 +187,7 @@
             </section>
         </div>
 
-        <div id="modal-sector" class="modal hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 2000;">
+        <div id="modal-sector" class="modal hidden" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items[...]
             <div class="modal-content" style="background: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 400px;">
                 <h3>Adicionar Novo Setor</h3>
                 <form id="sector-form" style="margin-top: 15px;">
@@ -206,22 +206,7 @@
         <div id="view-coletados" class="page-content hidden">
             <section class="module-section">
                 <h2>Lista de Produtos Coletados</h2>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th style="width: 40px;"></th>
-                                <th>Cód. Barras</th>
-                                <th style="width: 35%;">Produto</th>
-                                <th>Setor</th>
-                                <th>Qtd</th>
-                                <th>Vencimento</th>
-                                <th style="width: 10%; text-align: center;">Ação</th>
-                            </tr>
-                        </thead>
-                        <tbody id="product-table-body"></tbody>
-                    </table>
-                </div>
+                <div id="products-cards-container" class="products-cards-grid"></div>
             </section>
         </div>
 
